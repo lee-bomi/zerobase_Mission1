@@ -99,7 +99,7 @@
             ArrayList<JSONArray> arr = new ArrayList<>();
             JSONObject getJson = null;
 
-            for(int i = 0; i < 5; i++) {
+            for(int i = 0; i < 17; i++) {
                 urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088/4a69776956656d6d36366974486f6b/json/TbPublicWifiInfo/" + start + "/" + end + "/");
                 start += 1000;
                 end = start + 999;
