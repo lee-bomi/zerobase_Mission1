@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.quest.mission1.db.WifiService" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.quest.mission1.entity.WifiList" %>
 <%@ page import="com.quest.mission1.entity.History" %>
 <%@ page import="java.time.LocalDateTime" %>
 <%@ page import="java.time.format.DateTimeFormatter" %>
@@ -47,14 +46,13 @@
 <%
     double latCur = Double.parseDouble(request.getParameter("lat"));
     double lntCur = Double.parseDouble(request.getParameter("lnt"));
-    System.out.println("wifilist에서 새로입력한 좌표값 " + latCur + " / " + lntCur);
 %>
-<%--<form action="">--%>
-    <label for="lat">LAT: <input type="text" id="lat" placeholder="0.0" value="<%= latCur%>" name="lat"></label> ,
-    <label for="lnt">LNT: <input type="text" id="lnt" placeholder="0.0" value="<%= lntCur%>" name="lnt"></label>
-    <input type="button" id="getLocation" value="내 위치 가져오기">
-    <input  type="submit" value="근처 wifi정보보기" id="customLocation">
-<%--</form>--%>
+
+<label for="lat">LAT: <input type="text" id="lat" placeholder="0.0" value="<%= latCur%>" name="lat"></label> ,
+<label for="lnt">LNT: <input type="text" id="lnt" placeholder="0.0" value="<%= lntCur%>" name="lnt"></label>
+<input type="button" id="getLocation" value="내 위치 가져오기">
+<input  type="submit" value="근처 wifi정보보기" id="customLocation">
+
 <table id="customers">
     <tr>
         <th>거리(Km)</th>
@@ -115,7 +113,6 @@
     <%
             }
         }
-        //history data insert
         LocalDateTime now = LocalDateTime.now();
         String formatNow = now.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS"));
 

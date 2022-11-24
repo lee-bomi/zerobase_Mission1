@@ -55,7 +55,6 @@
         if (historyList != null) {
             for (int i = 0; i < historyList.size(); i++) {
     %>
-
     <tr>
         <td><%= historyList.get(i).getID() %></td>
         <td><%= historyList.get(i).getLNT() %></td>
@@ -63,20 +62,13 @@
         <td><%= historyList.get(i).getCURTIME() %></td>
         <td><button onclick="location.href = 'deleteAction.jsp?id=<%= historyList.get(i).getID() %>'">삭제</button></td>
     </tr>
-
     <%
             }
         }
     %>
 </table>
 <script type="text/javascript">
-<%--    function deleteHistory() {--%>
-<%--        let num = document.getElementById('#id').valueOf();--%>
-<%--        <%--%>
-<%--//            wifiService.deleteHistory(num);   // js => jsp로 어떻게 보내지--%>
-<%--        %>--%>
-<%--    }--%>
-<%--    document.querySelector('#delBtn').addEventListener('click', deleteHistory());--%>
+
 </script>
 </body>
 </html>

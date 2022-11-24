@@ -17,11 +17,7 @@ public class WifiService {
         ResultSet rs = null;
         List<WifiInfo> infos = new ArrayList<>();
 
-        try {
-            Class.forName("org.sqlite.JDBC");   //1. 드라이버 로드 (예외처리 필수, 감당안되면 throws하기, 감당되면 try catch로 처리)
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        connectJdbc();
 
         try {
             String sql = "select * from wifi_info order by ABS(LNT - " + lnt + ") * ABS(LNT - " + lnt + ") + ABS(LAT - " + lat + " ) * ABS(LAT - " + lat + ") ASC LIMIT 20";
@@ -76,21 +72,16 @@ public class WifiService {
         }
         return infos;
     }
-    //거리가 가까운순으로 20개만 뽑아온다
+
     public List<WifiList> getListIncludeDistance() {
         String url = "jdbc:sqlite:D:\\zerobase\\mission1\\sqlite.db";
-//        String url = "jdbc:sqlite:sqlite.db";
         Connection connection = null;
         Statement statement = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
         List<WifiList> wifiLists = new ArrayList<>();
 
-        try {
-            Class.forName("org.sqlite.JDBC");   //1. 드라이버 로드 (예외처리 필수, 감당안되면 throws하기, 감당되면 try catch로 처리)
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        connectJdbc();
 
         try {
             String sql = "select * from wifi_list_include_distance order by DISTANCE asc LIMIT 20";
@@ -147,7 +138,6 @@ public class WifiService {
         return wifiLists;
     }
 
-    //history list를 가져온다
     public List<History> getHistoryList() {
         String url = "jdbc:sqlite:D:\\zerobase\\mission1\\sqlite.db";
         Connection connection = null;
@@ -156,11 +146,7 @@ public class WifiService {
         ResultSet rs = null;
         List<History> historyList = new ArrayList<>();
 
-        try {
-            Class.forName("org.sqlite.JDBC");   //1. 드라이버 로드 (예외처리 필수, 감당안되면 throws하기, 감당되면 try catch로 처리)
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        connectJdbc();
 
         try {
             String sql = "select * from history";
@@ -210,11 +196,7 @@ public class WifiService {
         Statement statement = null;
         int affectedRows = 0;
 
-        try {
-            Class.forName("org.sqlite.JDBC");   //1. 드라이버 로드 (예외처리 필수, 감당안되면 throws하기, 감당되면 try catch로 처리)
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        connectJdbc();
 
         for (WifiInfo wifiInfo : list) {
             try {
@@ -271,11 +253,7 @@ public class WifiService {
         Statement statement = null;
         int affectedRows = 0;
 
-        try {
-            Class.forName("org.sqlite.JDBC");   //1. 드라이버 로드 (예외처리 필수, 감당안되면 throws하기, 감당되면 try catch로 처리)
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        connectJdbc();
 
 
         try {
@@ -363,11 +341,7 @@ public class WifiService {
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
 
-        try {
-            Class.forName("org.sqlite.JDBC");   //1. 드라이버 로드 (예외처리 필수, 감당안되면 throws하기, 감당되면 try catch로 처리)
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        connectJdbc();
 
         try {
             connection = DriverManager.getConnection(url);   //2. 커넥션객체생성
@@ -398,4 +372,12 @@ public class WifiService {
 
         };
     }
+    public void connectJdbc() {
+        try {
+            Class.forName("org.sqlite.JDBC");   //1. 드라이버 로드 (예외처리 필수, 감당안되면 throws하기, 감당되면 try catch로 처리)
+        } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

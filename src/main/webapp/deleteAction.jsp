@@ -1,12 +1,6 @@
 <%@ page import="com.quest.mission1.db.WifiService" %>
 <%@ page import="com.quest.mission1.entity.History" %>
-<%@ page import="java.util.List" %><%--
-  Created by IntelliJ IDEA.
-  User: BOMI
-  Date: 2022-11-24
-  Time: 오후 6:16
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.util.List" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -69,7 +63,6 @@
             <td><%= historyList.get(i).getCURTIME() %></td>
             <td><button onclick="location.href = 'deleteAction.jsp?id=<%= historyList.get(i).getID() %>'">삭제</button></td>
         </tr>
-
         <%
                 }
             }

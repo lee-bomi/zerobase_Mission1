@@ -35,15 +35,15 @@
 </head>
 <body>
 <h1>와이파이 정보 구하기</h1>
-    <a href="index.jsp">홈</a> | <a href="historyList.jsp">위치 히스토리 목록</a> | <a id="tossGeo">Open API 와이파이 정보 가져오기</a>
+    <a href="index.jsp">홈</a> | <a href="historyList.jsp">위치 히스토리 목록</a> | <a id="tossGeo" style="text-decoration: underline">Open API 와이파이 정보 가져오기</a>
 <br>
 <br>
-<%--<form action="wifiList.jsp">--%>
-    <label for="lat">LAT: <input type="text" id="lat" placeholder="0.0" value="" name="lat"></label> ,
-    <label for="lnt">LNT: <input type="text" id="lnt" placeholder="0.0" name="lnt"></label>
-    <input type="button" id="getLocation" value="내 위치 가져오기">
-    <input type="button" id="getList" value="근처 wifi정보보기">
-<%--</form>--%>
+
+<label for="lat">LAT: <input type="text" id="lat" placeholder="0.0" value="" name="lat"></label> ,
+<label for="lnt">LNT: <input type="text" id="lnt" placeholder="0.0" name="lnt"></label>
+<input type="button" id="getLocation" value="내 위치 가져오기">
+<input type="button" id="getList" value="근처 wifi정보보기">
+
 <table id="customers">
     <tr>
         <th>거리(Km)</th>
@@ -64,15 +64,11 @@
         <th>Y좌표</th>
         <th>작업일자</th>
     </tr>
-
-    <%
-        WifiService wifiService = new WifiService();
-    %>
-        <tr><td colspan="17" style="text-align: center">위치 정보를 입력한 후에 조회해 주세요</td></tr>
+    <tr><td colspan="17" style="text-align: center">위치 정보를 입력한 후에 조회해 주세요</td></tr>
 
 </table>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script type="text/javascript"> //여기에 insert구문을 넣고, 완료되면 redirect하여 infoSave로 간다?
+<script type="text/javascript">
     let latitude = 0;
     let longitude = 0;
     function geoFindMe() {
@@ -102,7 +98,6 @@
     document.querySelector('#tossGeo').addEventListener('click', toss);
 
     function getWifiList() {    //쿼리문에서 검색해서 가져옴
-        // wifilist로 위도경도 보내고, 거기서 계산해서 넣는다
         let _lat = document.getElementById('lat').value;
         let _lnt = document.getElementById('lnt').value;
 

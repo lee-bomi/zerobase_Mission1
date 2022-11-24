@@ -75,11 +75,7 @@
         <th>Y좌표</th>
         <th>작업일자</th>
     </tr>
-
-    <%
-        WifiService wifiService = new WifiService();
-    %>
-        <tr><td colspan="17" style="text-align: center">위치 정보를 입력한 후에 조회해 주세요</td></tr>
+    <tr><td colspan="17" style="text-align: center">위치 정보를 입력한 후에 조회해 주세요</td></tr>
 
 </table>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
@@ -125,6 +121,7 @@
                 conn.disconnect();
             }
 
+            WifiService wifiService = new WifiService();
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);  //dto의 각 프로퍼티에 데이터 매핑해주기위함
             try{
@@ -133,7 +130,6 @@
                     wifiService.dbInsert(data);   //현재위치 좌표도 함께 보냄
                     System.out.println(i + " : data insert");
                 }
-                System.out.println("여기는 try : 완료햇다오바");
             }catch (JsonProcessingException e){
                 e.printStackTrace();
             }finally{
