@@ -9,13 +9,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class WifiService {
-    public List<WifiList> getList() {
+    public List<WifiInfo> getList(double lat, double lnt) {
         String url = "jdbc:sqlite:D:\\zerobase\\mission1\\sqlite.db";
         Connection connection = null;
         Statement statement = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
-        List<WifiList> infos = new ArrayList<>();
+        List<WifiInfo> infos = new ArrayList<>();
 
         try {
             Class.forName("org.sqlite.JDBC");   //1. 드라이버 로드 (예외처리 필수, 감당안되면 throws하기, 감당되면 try catch로 처리)
@@ -24,13 +24,12 @@ public class WifiService {
         }
 
         try {
-            String sql = "select * from wifi_info ORDER BY DISTANCE ASC limit 20";
+            String sql = "select * from wifi_info order by ABS(LNT - " + lnt + ") * ABS(LNT - " + lnt + ") + ABS(LAT - " + lat + " ) * ABS(LAT - " + lat + ") ASC LIMIT 20";
             connection = DriverManager.getConnection(url);    //2. 커넥션객체생성
             preparedStatement = connection.prepareStatement(sql);         //3. 스테이트먼터객체 실행
-//            statement = connection.createStatement();         //3. 스테이트먼터객체 실행
             rs = preparedStatement.executeQuery();                 //4. 쿼리실행
             while (rs.next()) {
-                WifiList info = new WifiList();
+                WifiInfo info = new WifiInfo();
                 info.setX_SWIFI_MGR_NO(rs.getString("MGR_NO"));
                 info.setX_SWIFI_WRDOFC(rs.getString("WRDOFC"));
                 info.setX_SWIFI_MAIN_NM(rs.getString("MAIN_NM"));
@@ -47,7 +46,6 @@ public class WifiService {
                 info.setLAT(rs.getString("LAT"));
                 info.setLNT(rs.getString("LNT"));
                 info.setWORK_DTTM(rs.getString("WORK_DTTM"));
-                info.setDISTANCE(rs.getDouble("DISTANCE"));
 
                 infos.add(info);
             }
@@ -204,15 +202,13 @@ public class WifiService {
         }
         return historyList;
     }
-    public int dbInsert(WifiInfo[] list, String lntVal, String latVal) {
+    public int dbInsert(WifiInfo[] list) {
         String url = "jdbc:sqlite:D:\\zerobase\\mission1\\sqlite.db";
         Connection connection = null;
         PreparedStatement preparedStatement = null;
         ResultSet rs = null;
         Statement statement = null;
         int affectedRows = 0;
-        double lnt = Double.parseDouble(lntVal);
-        double lat = Double.parseDouble(latVal);
 
         try {
             Class.forName("org.sqlite.JDBC");   //1. 드라이버 로드 (예외처리 필수, 감당안되면 throws하기, 감당되면 try catch로 처리)
@@ -224,15 +220,9 @@ public class WifiService {
             try {
                 connection = DriverManager.getConnection(url);   //2. 커넥션객체생성
                 String sql = "insert or replace into wifi_info (" +     //db에 같은 mgr_no값이 있다면 대체해주는 쿼리(MGR_NO = unique key처리
-                        "MGR_NO, WRDOFC, MAIN_NM, ADRES1, ADRES2, INSTL_FLOOR, INSTL_TY, INSTL_MBY, SVC_SE, CMCWR, CNSTC_YEAR, INOUT_DOOR, REMARS3, LAT, LNT, WORK_DTTM, DISTANCE) " +
-                        "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                        "MGR_NO, WRDOFC, MAIN_NM, ADRES1, ADRES2, INSTL_FLOOR, INSTL_TY, INSTL_MBY, SVC_SE, CMCWR, CNSTC_YEAR, INOUT_DOOR, REMARS3, LAT, LNT, WORK_DTTM) " +
+                        "values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
                 preparedStatement = connection.prepareStatement(sql);
-                //distance추가?
-                double _lat = Double.parseDouble(wifiInfo.getLAT());
-                double _lnt = Double.parseDouble(wifiInfo.getLNT());
-                double x = Math.pow(lnt - _lnt, 2);
-                double y = Math.pow(lat - _lat, 2);
-                double distance = Math.sqrt(x + y);
                 preparedStatement.setString(1, wifiInfo.getX_SWIFI_MGR_NO());
                 preparedStatement.setString(2, wifiInfo.getX_SWIFI_WRDOFC());
                 preparedStatement.setString(3, wifiInfo.getX_SWIFI_MAIN_NM());
@@ -249,7 +239,6 @@ public class WifiService {
                 preparedStatement.setString(14, wifiInfo.getLAT());
                 preparedStatement.setString(15, wifiInfo.getLNT());
                 preparedStatement.setString(16, wifiInfo.getWORK_DTTM());
-                preparedStatement.setDouble(17, distance);
 
                 affectedRows = preparedStatement.executeUpdate();
             } catch (SQLException e) {

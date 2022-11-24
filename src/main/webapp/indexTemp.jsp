@@ -86,9 +86,9 @@
 <script type="text/javascript">
     function getInfos() {
         <%
-            String lnt = request.getParameter("lnt");
-            String lat = request.getParameter("lat");
-            System.out.println("indexTemp lnt, lat : " + lnt + ", " + lat);
+//            String lnt = request.getParameter("lnt");
+//            String lat = request.getParameter("lat");
+//            System.out.println("indexTemp lnt, lat : " + lnt + ", " + lat);
             int totalCnt = 0;
             StringBuilder urlBuilder = null;
             HttpURLConnection conn = null;
@@ -99,7 +99,7 @@
             ArrayList<JSONArray> arr = new ArrayList<>();
             JSONObject getJson = null;
 
-            for(int i = 0; i < 17; i++) {
+            for(int i = 0; i < 5; i++) {
                 urlBuilder = new StringBuilder("http://openapi.seoul.go.kr:8088/4a69776956656d6d36366974486f6b/json/TbPublicWifiInfo/" + start + "/" + end + "/");
                 start += 1000;
                 end = start + 999;
@@ -130,7 +130,7 @@
             try{
                 for(int i = 0; i < arr.size(); i++) {
                     WifiInfo[] data = objectMapper.readValue(arr.get(i).toString(), WifiInfo[].class);
-                    wifiService.dbInsert(data, lnt, lat);   //현재위치 좌표도 함께 보냄
+                    wifiService.dbInsert(data);   //현재위치 좌표도 함께 보냄
                     System.out.println(i + " : data insert");
                 }
                 System.out.println("여기는 try : 완료햇다오바");

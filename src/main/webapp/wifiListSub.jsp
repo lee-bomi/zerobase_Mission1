@@ -50,10 +50,10 @@
     System.out.println("wifilist에서 새로입력한 좌표값 " + latCur + " / " + lntCur);
 %>
 <%--<form action="">--%>
-    <label for="lat">LAT: <input type="text" id="lat" placeholder="0.0" value="<%= latCur%>" name="lat"></label> ,
-    <label for="lnt">LNT: <input type="text" id="lnt" placeholder="0.0" value="<%= lntCur%>" name="lnt"></label>
-    <input type="button" id="getLocation" value="내 위치 가져오기">
-    <input  type="submit" value="근처 wifi정보보기" id="customLocation">
+<label for="lat">LAT: <input type="text" id="lat" placeholder="0.0" value="<%= latCur%>" name="lat"></label> ,
+<label for="lnt">LNT: <input type="text" id="lnt" placeholder="0.0" value="<%= lntCur%>" name="lnt"></label>
+<input type="button" id="getLocation" value="내 위치 가져오기">
+<input  type="submit" value="근처 wifi정보보기" id="customLocation">
 <%--</form>--%>
 <table id="customers">
     <tr>
@@ -90,7 +90,7 @@
                 _lnt = Double.parseDouble(lists.get(i).getLNT());
                 lat= Math.pow(latCur - _lat, 2);
                 lnt= Math.pow(lntCur - _lnt, 2);
-               distance = Math.sqrt(lat + lnt);
+                distance = Math.sqrt(lat + lnt);
     %>
 
     <tr>
@@ -126,21 +126,6 @@
 </table>
 <script type="text/javascript">
 
-    let lnt = document.getElementById('lnt').value;
-    let lat = document.getElementById('lat').value;
-
-    function setHistory() {
-        location.href = '/historyList.jsp?lnt=' + lnt + '&lat=' + lat;
-    }
-    document.querySelector('#addMemo').addEventListener('click', setHistory);
-
-    function getNewData() {
-        let lnt = document.getElementById('lnt').value;
-        let lat = document.getElementById('lat').value;
-
-        location.href = '/wifiListSub.jsp?lat=' + lat + '&lnt=' + lnt;
-    }
-    document.querySelector('#customLocation').addEventListener('click', getNewData);
 </script>
 </body>
 </html>

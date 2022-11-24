@@ -38,12 +38,12 @@
     <a href="index.jsp">홈</a> | <a href="historyList.jsp">위치 히스토리 목록</a> | <a id="tossGeo">Open API 와이파이 정보 가져오기</a>
 <br>
 <br>
-<form action="wifiList.jsp">
+<%--<form action="wifiList.jsp">--%>
     <label for="lat">LAT: <input type="text" id="lat" placeholder="0.0" value="" name="lat"></label> ,
     <label for="lnt">LNT: <input type="text" id="lnt" placeholder="0.0" name="lnt"></label>
     <input type="button" id="getLocation" value="내 위치 가져오기">
-    <input type="submit" value="근처 wifi정보보기">
-</form>
+    <input type="button" id="getList" value="근처 wifi정보보기">
+<%--</form>--%>
 <table id="customers">
     <tr>
         <th>거리(Km)</th>
@@ -100,6 +100,15 @@
         location.href = '/indexTemp.jsp?lnt=' + longitude + '&lat=' + latitude;
     }
     document.querySelector('#tossGeo').addEventListener('click', toss);
+
+    function getWifiList() {    //쿼리문에서 검색해서 가져옴
+        // wifilist로 위도경도 보내고, 거기서 계산해서 넣는다
+        let _lat = document.getElementById('lat').value;
+        let _lnt = document.getElementById('lnt').value;
+
+        location.href = '/wifiList.jsp?lat=' + _lat + '&lnt=' + _lnt;
+    }
+    document.querySelector('#getList').addEventListener('click', getWifiList);
 </script>
 </body>
 </html>
